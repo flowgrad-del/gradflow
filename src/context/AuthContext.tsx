@@ -178,6 +178,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         collegeDomain: domain,
         collegeName,
         displayName: customName || user.displayName || `${collegeName} Student`,
+        accountType: 'real',
+        isBot: false,
+        role: 'student',
+        branch: 'Computer Science & Engineering',
+        year: 'Final Year (2026 Batch)',
         registeredAt: serverTimestamp(),
         lastLoginAt: serverTimestamp()
       };
@@ -185,7 +190,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!userDoc.exists()) {
         await setDoc(userRef, profileData, { merge: true });
       } else {
-        await setDoc(userRef, { lastLoginAt: serverTimestamp() }, { merge: true });
+        await setDoc(userRef, { lastLoginAt: serverTimestamp(), accountType: 'real', isBot: false }, { merge: true });
       }
 
       const activeProfile: UserProfile = {
@@ -193,9 +198,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: user.email || '',
         displayName: customName || user.displayName || `${collegeName} Student`,
         collegeDomain: domain,
+        collegeName,
         branch: 'Computer Science & Engineering',
         year: 'Final Year (2026 Batch)',
-        role: 'student'
+        role: 'student',
+        accountType: 'real',
+        isBot: false
       };
 
       setUserProfile(activeProfile);

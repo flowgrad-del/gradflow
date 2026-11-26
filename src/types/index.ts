@@ -69,8 +69,16 @@ export interface UserProfile {
   email: string;
   displayName: string;
   collegeDomain: string;
+  collegeName?: string;
   usn?: string;
   branch?: string;
   year?: string;
   role: 'student' | 'admin';
+  accountType?: 'real' | 'bot';
+  isBot?: boolean;
+  submissionsCount?: number;
+  registeredAt?: any;
+  lastLoginAt?: any;
+  avatarUrl?: string;
 }
+

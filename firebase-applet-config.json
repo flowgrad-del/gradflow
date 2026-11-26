@@ -1,12 +1,12 @@
 {
-  "projectId": "",
-  "appId": "",
-  "apiKey": "",
-  "authDomain": "",
-  "firestoreDatabaseId": "",
-  "storageBucket": "",
-  "messagingSenderId": "",
+  "projectId": "gen-lang-client-0474675778",
+  "appId": "1:884925292822:web:8537cb67dd3348b722f037",
+  "apiKey": "AIzaSyD8S_4PLMN5a7LxjV7A2Ezeb-iaFBtmgHo",
+  "authDomain": "gen-lang-client-0474675778.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-gradflow-2c503e72-6238-4477-8b1a-74fb303db1b4",
+  "storageBucket": "gen-lang-client-0474675778.firebasestorage.app",
+  "messagingSenderId": "884925292822",
   "measurementId": "",
-  "oAuthClientId": "",
+  "oAuthClientId": "884925292822-5s497i9a8vfsj5i301vdu1fjb67n1a2k.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
 }

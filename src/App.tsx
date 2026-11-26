@@ -268,6 +268,16 @@ const MainApp: React.FC = () => {
               </div>
               <span className="text-sm font-sans tracking-tight font-black">GradFlow</span>
             </div>
+
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setIsAdminModalOpen(true)}
+                className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 text-[11px] font-bold font-mono flex items-center space-x-1.5 cursor-pointer transition-colors"
+              >
+                <Database className="w-3.5 h-3.5 text-[#FF5722]" />
+                <span>Firestore Admin &amp; Dev Controls</span>
+              </button>
+            </div>
           </div>
 
           <div className="pt-4 border-t border-[#222226] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400">
@@ -292,6 +302,12 @@ const MainApp: React.FC = () => {
                 className="text-slate-300 hover:text-[#FF5722] font-semibold transition-colors duration-200 cursor-pointer min-h-[36px] flex items-center"
               >
                 Radar
+              </button>
+              <button 
+                onClick={() => setActiveTab('faq')}
+                className="text-slate-300 hover:text-[#FF5722] font-semibold transition-colors duration-200 cursor-pointer min-h-[36px] flex items-center"
+              >
+                FAQ
               </button>
             </div>
           </div>

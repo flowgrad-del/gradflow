@@ -13,14 +13,16 @@ import {
   Bot,
   UserCheck,
   Building2,
-  Sparkles
+  Sparkles,
+  Users
 } from 'lucide-react';
 import { 
   purgeBotFeedbacks, 
   seedBotFeedbacks, 
   syncWhitelistedDomains, 
   addCustomDomain,
-  toggleDomainStatus
+  toggleDomainStatus,
+  seedInitialUsers
 } from '../services/adminService';
 import { useAuth } from '../context/AuthContext';
 import { InterviewFeedback } from '../types';
@@ -138,6 +140,27 @@ export const AdminDevModal: React.FC<AdminDevModalProps> = ({
       }
     } catch (e: any) {
       setStatusMessage({ type: 'error', text: e.message || 'Failed to add domain' });
+    } finally {
+      setLoadingAction(null);
+    }
+  };
+
+  const handleSeedUsers = async () => {
+    setLoadingAction('seedUsers');
+    setStatusMessage({ type: 'info', text: 'Seeding verified real student user accounts into collection "users"...' });
+
+    try {
+      const result = await seedInitialUsers();
+      if (!result.success) {
+        setStatusMessage({ type: 'error', text: `Users seed notice: ${result.error}` });
+      } else {
+        setStatusMessage({ 
+          type: 'success', 
+          text: `Successfully seeded ${result.count} verified real student profiles into Firestore "users" collection!` 
+        });
+      }
+    } catch (e: any) {
+      setStatusMessage({ type: 'error', text: e.message || 'Users seeding failed' });
     } finally {
       setLoadingAction(null);
     }
@@ -329,11 +352,25 @@ export const AdminDevModal: React.FC<AdminDevModalProps> = ({
               )}
             </div>
           </div>
+
+          {/* Action 3: Student Users Database Storage (`users` collection) */}
+          <div className="bg-[#141418] border border-[#27272A] rounded-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Users className="w-5 h-5 text-emerald-400" />
+                <h3 className="font-bold text-white text-base">Student Users Database Storage (<code>users</code>)</h3>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Whenever students sign in or log in with their college domain email address, their profile is automatically stored in Firestore collection <code className="text-emerald-400 font-mono">users/{'{uid}'}</code> with <code className="text-emerald-400 font-mono">accountType: "real"</code>. When they submit an interview review, it is saved into <code className="text-[#FF5722] font-mono">interview_feedback</code> while keeping the public review strictly anonymous.
+            </p>
+          </div>
         </div>
 
         {/* Footer */}
         <div className="p-4 bg-[#141418] border-t border-[#27272A] flex items-center justify-between text-xs text-slate-400">
-          <span>Database ID: <code className="font-mono text-[#FF5722]">ai-studio-ad099c6c</code></span>
+          <span>Database ID: <code className="font-mono text-[#FF5722]">ai-studio-gradflow-2c503e72-6238-4477-8b1a-74fb303db1b4</code></span>
           <button
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-[#27272A] hover:bg-[#333338] text-white font-bold transition-colors cursor-pointer"

@@ -31,7 +31,7 @@ import { TOPIC_CATEGORIES } from '../data/topics';
 import { Difficulty, InterviewFeedback, RoundNumber } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase/config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, doc, setDoc, increment } from 'firebase/firestore';
 import { MovingParticlesBackground } from './MovingParticlesBackground';
 
 interface FeedbackFormProps {
@@ -458,6 +458,19 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSuccess, openAuthM
       const docRef = await addDoc(collection(db, 'interview_feedback'), firestoreData);
       console.log('Feedback submitted to Firestore successfully with ID:', docRef.id);
       
+      // Update student's stored user profile in Firestore
+      if (currentUser?.uid) {
+        try {
+          const userRef = doc(db, 'users', currentUser.uid);
+          await setDoc(userRef, {
+            submissionsCount: increment(1),
+            lastSubmittedAt: serverTimestamp()
+          }, { merge: true });
+        } catch (uErr) {
+          console.warn('User submission record update notice:', uErr);
+        }
+      }
+
       setIsSubmitting(false);
       setSubmittedSuccess(true);
       

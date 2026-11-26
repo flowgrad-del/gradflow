@@ -2,7 +2,7 @@
   "entities": {
     "InterviewFeedback": {
       "title": "InterviewFeedback",
-      "description": "Anonymous interview feedback submitted by verified college students.",
+      "description": "Anonymous interview feedback submitted by students or seeded by platform bots.",
       "type": "object",
       "properties": {
         "company": {
@@ -23,7 +23,7 @@
         },
         "durationMinutes": {
           "type": "number",
-          "description": "Round duration in minutes (15 to 120)"
+          "description": "Round duration in minutes (15 to 240)"
         },
         "overallDifficulty": {
           "type": "string",
@@ -36,40 +36,40 @@
         },
         "questionStyles": {
           "type": "object",
-          "description": "Question style percentage breakdown and individual difficulty levels"
+          "description": "Question style percentage breakdown and individual difficulty levels (techPercent, techDifficulty, aiPercent, aiDifficulty, aptitudePercent, aptitudeDifficulty, dsa, systemDesign, behavioral)"
         },
         "topicsTested": {
           "type": "array",
-          "description": "Specific topics tested from the 50-topic checklist"
+          "description": "Specific topics tested from the topic checklist"
         },
         "technicalQuestions": {
           "type": "string",
           "description": "Optional specific technical and coding questions asked",
-          "maxLength": 1000
+          "maxLength": 1500
         },
         "hrQuestions": {
           "type": "string",
           "description": "Optional HR and behavioral questions asked",
-          "maxLength": 1000
+          "maxLength": 1500
         },
         "juniorTips": {
           "type": "string",
           "description": "Optional preparation tips and warnings for juniors",
-          "maxLength": 1000
+          "maxLength": 1500
         },
         "feedbackType": {
           "type": "string",
-          "description": "Origin flag: 'user' for authentic student submission, 'bot' for platform mock entries",
+          "description": "Origin flag: 'user' for student submission, 'bot' for platform mock entries",
           "enum": ["user", "bot"]
         },
         "submittedAt": {
           "type": "string",
-          "description": "Server timestamp of submission"
+          "description": "Timestamp of submission"
         },
         "collegeDomain": {
           "type": "string",
           "description": "Validated college email domain of author",
-          "maxLength": 60
+          "maxLength": 80
         },
         "authorUid": {
           "type": "string",
@@ -85,6 +85,10 @@
           "type": "string",
           "description": "Email address of the submitter",
           "maxLength": 100
+        },
+        "year": {
+          "type": "number",
+          "description": "Academic graduation year"
         }
       },
       "required": [
@@ -93,11 +97,35 @@
         "round",
         "durationMinutes",
         "overallDifficulty",
-        "panelTypes",
-        "questionStyles",
-        "topicsTested",
         "collegeDomain"
       ]
+    },
+    "WhitelistedDomain": {
+      "title": "WhitelistedDomain",
+      "description": "Institutional college email domain approved for campus portal registration.",
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Official domain suffix e.g. cmrit.ac.in, rvce.edu.in",
+          "maxLength": 80
+        },
+        "collegeName": {
+          "type": "string",
+          "description": "Full formal name of the institution",
+          "maxLength": 150
+        },
+        "status": {
+          "type": "string",
+          "description": "Domain authorization state",
+          "enum": ["active", "disabled"]
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "Timestamp of domain registration"
+        }
+      },
+      "required": ["domain", "collegeName", "status"]
     },
     "Opportunity": {
       "title": "Opportunity",
@@ -141,7 +169,7 @@
         "descriptionSummary": {
           "type": "string",
           "description": "AI-summarized brief description",
-          "maxLength": 1500
+          "maxLength": 2000
         },
         "stipendOrPrize": {
           "type": "string",
@@ -153,7 +181,7 @@
           "description": "Creation timestamp"
         }
       },
-      "required": ["title", "provider", "type", "link"]
+      "required": ["title", "provider", "link"]
     },
     "UserProfile": {
       "title": "UserProfile",
@@ -162,7 +190,7 @@
       "properties": {
         "uid": {
           "type": "string",
-          "description": "Firebase Auth UID",
+          "description": "Firebase Auth UID matching auth uid",
           "maxLength": 128
         },
         "email": {
@@ -170,20 +198,20 @@
           "description": "Official college email address",
           "maxLength": 100
         },
+        "collegeDomain": {
+          "type": "string",
+          "description": "Validated college domain e.g. cmrit.ac.in",
+          "maxLength": 80
+        },
         "displayName": {
           "type": "string",
           "description": "Student full name",
           "maxLength": 100
         },
-        "collegeDomain": {
-          "type": "string",
-          "description": "Validated college domain e.g. cmrit.ac.in",
-          "maxLength": 60
-        },
         "usn": {
           "type": "string",
           "description": "University Seat Number",
-          "maxLength": 20
+          "maxLength": 30
         },
         "branch": {
           "type": "string",
@@ -192,47 +220,42 @@
         },
         "year": {
           "type": "string",
-          "description": "Graduation year or current year",
-          "maxLength": 20
+          "description": "Academic graduation year or current class",
+          "maxLength": 30
+        },
+        "collegeName": {
+          "type": "string",
+          "description": "Full formal name of student's engineering college",
+          "maxLength": 150
         },
         "role": {
           "type": "string",
           "description": "User permission role",
           "enum": ["student", "admin"]
         },
-        "createdAt": {
+        "accountType": {
           "type": "string",
-          "description": "Account registration date"
+          "description": "User identity classifier to distinguish real users from bot reviewers",
+          "enum": ["real", "bot"]
+        },
+        "isBot": {
+          "type": "boolean",
+          "description": "Flag indicating if the user is a simulated bot account or genuine student"
+        },
+        "submissionsCount": {
+          "type": "number",
+          "description": "Number of authentic interview reviews contributed by this user"
+        },
+        "registeredAt": {
+          "type": "string",
+          "description": "Timestamp of student account creation"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "Timestamp of most recent login"
         }
       },
       "required": ["uid", "email", "collegeDomain"]
-    },
-    "WhitelistedDomain": {
-      "title": "WhitelistedDomain",
-      "description": "Institutional college email domain approved for campus portal registration.",
-      "type": "object",
-      "properties": {
-        "domain": {
-          "type": "string",
-          "description": "Official domain suffix e.g. cmrit.ac.in, rvce.edu.in",
-          "maxLength": 80
-        },
-        "collegeName": {
-          "type": "string",
-          "description": "Full formal name of the institution",
-          "maxLength": 150
-        },
-        "status": {
-          "type": "string",
-          "description": "Domain authorization state",
-          "enum": ["active", "disabled"]
-        },
-        "addedAt": {
-          "type": "string",
-          "description": "Timestamp of domain registration"
-        }
-      },
-      "required": ["domain", "collegeName", "status"]
     }
   },
   "firestore": {
@@ -240,25 +263,25 @@
       "schema": {
         "$ref": "InterviewFeedback"
       },
-      "description": "Anonymous interview submissions"
-    },
-    "/opportunities/{opportunityId}": {
-      "schema": {
-        "$ref": "Opportunity"
-      },
-      "description": "Scraped and AI-summarized placement opportunities"
-    },
-    "/users/{userId}": {
-      "schema": {
-        "$ref": "UserProfile"
-      },
-      "description": "Private user profile records"
+      "description": "Student-submitted and bot-seeded interview feedback reviews"
     },
     "/whitelisted_domains/{domainId}": {
       "schema": {
         "$ref": "WhitelistedDomain"
       },
-      "description": "Dynamic whitelist store of authorized campus engineering email domains"
+      "description": "Authorized Bangalore college engineering domains for institutional sign-in validation"
+    },
+    "/opportunities/{opportunityId}": {
+      "schema": {
+        "$ref": "Opportunity"
+      },
+      "description": "Curated and scraped job/internship/hackathon listings"
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "UserProfile"
+      },
+      "description": "Registered student and placement coordinator profile records"
     }
   }
 }

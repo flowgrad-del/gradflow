@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { 
   HelpCircle, 
-  Search, 
   ChevronDown, 
   ChevronUp, 
   ShieldCheck, 
@@ -184,7 +183,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onNavigate }) => {
           </p>
 
           {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 gap-3 mt-8 max-w-lg mx-auto">
             <div className="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 text-center backdrop-blur-sm">
               <span className="block text-xl sm:text-2xl font-black text-[#FF5722]">100%</span>
               <span className="text-[11px] sm:text-xs text-slate-400 font-medium">Free For Students</span>
@@ -192,36 +191,6 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onNavigate }) => {
             <div className="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 text-center backdrop-blur-sm">
               <span className="block text-xl sm:text-2xl font-black text-emerald-400">Zero</span>
               <span className="text-[11px] sm:text-xs text-slate-400 font-medium">Personal IDs Stored</span>
-            </div>
-            <div className="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 text-center backdrop-blur-sm">
-              <span className="block text-xl sm:text-2xl font-black text-amber-400">~2 min</span>
-              <span className="text-[11px] sm:text-xs text-slate-400 font-medium">Submission Time</span>
-            </div>
-            <div className="p-3 sm:p-4 rounded-2xl bg-white/5 border border-white/10 text-center backdrop-blur-sm">
-              <span className="block text-xl sm:text-2xl font-black text-blue-400">50+</span>
-              <span className="text-[11px] sm:text-xs text-slate-400 font-medium">College Domains</span>
-            </div>
-          </div>
-
-          {/* Search Box */}
-          <div className="mt-8 max-w-2xl mx-auto">
-            <div className="relative flex items-center">
-              <Search className="absolute left-4 w-5 h-5 text-slate-400 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search questions (e.g., anonymous, email domain, radar, free)..."
-                className="w-full pl-12 pr-4 py-3.5 sm:py-4 rounded-2xl bg-[#18181B] border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF5722] focus:border-transparent transition-all shadow-xl"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-4 text-xs font-bold text-slate-400 hover:text-white px-2 py-1 rounded bg-white/10"
-                >
-                  Clear
-                </button>
-              )}
             </div>
           </div>
         </div>
