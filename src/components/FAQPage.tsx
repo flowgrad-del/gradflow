@@ -201,9 +201,9 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onNavigate }) => {
         {/* Category Filter Pills & Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-            {categories.map((cat) => (
+            {categories.map((cat, idx) => (
               <button
-                key={cat}
+                key={`${cat}-${idx}`}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer min-h-[36px] ${
                   selectedCategory === cat
@@ -252,14 +252,14 @@ export const FAQPage: React.FC<FAQPageProps> = ({ onNavigate }) => {
           </div>
         ) : (
           <div className="space-y-3.5">
-            {filteredFaqs.map((faq) => {
+            {filteredFaqs.map((faq, idx) => {
               const isOpen = openIds.includes(faq.id);
               const vote = helpfulVotes[faq.id];
               const IconComponent = faq.icon;
 
               return (
                 <div
-                  key={faq.id}
+                  key={`${faq.id}-${idx}`}
                   className={`bg-white rounded-2xl border transition-all duration-200 overflow-hidden ${
                     isOpen 
                       ? 'border-[#FF5722]/50 shadow-md ring-1 ring-[#FF5722]/20' 

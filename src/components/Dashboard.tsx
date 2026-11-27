@@ -725,7 +725,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
             {visitedColleges.map((college, idx) => (
               <div 
-                key={college.domain}
+                key={`${college.domain}-${idx}`}
                 className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between hover:border-[#FF5722]/40 transition-colors"
               >
                 <div className="flex items-center space-x-3 min-w-0">
@@ -768,7 +768,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           {/* Stepper Timeline Diagram */}
           <div className="space-y-3 pt-1">
             {companyRoundsInfo.map((r, idx) => (
-              <div key={r.round} className="flex items-start space-x-3 group">
+              <div key={`${r.round}-${idx}`} className="flex items-start space-x-3 group">
                 <div className="flex flex-col items-center">
                   <div className="w-8 h-8 rounded-full bg-[#09090B] text-[#FF5722] font-black text-xs flex items-center justify-center shadow-xs border border-white/10 group-hover:bg-[#FF5722] group-hover:text-white transition-colors">
                     R{r.round}
@@ -812,9 +812,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         <div className="flex flex-wrap gap-2 pt-2">
-          {conceptsTested.map(concept => (
+          {conceptsTested.map((concept, idx) => (
             <div 
-              key={concept}
+              key={`${concept}-${idx}`}
               className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 hover:border-[#FF5722] hover:bg-[#FFF3E0] hover:text-[#E64A19] transition-all cursor-default shadow-xs"
             >
               <span className="w-2 h-2 rounded-full bg-[#FF5722]" />
@@ -1038,8 +1038,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         <Clock className="w-3 h-3 mr-1 text-slate-400" />
                         {item.durationMinutes} mins
                       </span>
-                      {(item.panelTypes || []).map(p => (
-                        <span key={p} className="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-600">
+                      {(item.panelTypes || []).map((p, pIdx) => (
+                        <span key={`${p}-${pIdx}`} className="px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-600">
                           {p}
                         </span>
                       ))}
@@ -1049,8 +1049,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     <div className="space-y-1">
                       <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Topics Queried</div>
                       <div className="flex flex-wrap gap-1">
-                        {(item.topicsTested || []).slice(0, 5).map(topic => (
-                          <span key={topic} className="text-[11px] px-2 py-0.5 rounded-md bg-[#FF5722]/10 text-[#E64A19] font-medium border border-[#FF5722]/20">
+                        {(item.topicsTested || []).slice(0, 5).map((topic, tIdx) => (
+                          <span key={`${topic}-${tIdx}`} className="text-[11px] px-2 py-0.5 rounded-md bg-[#FF5722]/10 text-[#E64A19] font-medium border border-[#FF5722]/20">
                             {topic}
                           </span>
                         ))}
